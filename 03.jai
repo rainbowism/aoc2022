@@ -30,13 +30,13 @@ main :: () {
 }
 
 find_matches :: inline ($N: int, inputs: .. string) -> s64 {
-    // Convert the strings into bitmasks where bits 1-26 are A-Z
-    //  and bits 32-58 are a-z.
+    // Convert the strings into bitmasks where
+    //  bits 1-26 are A-Z and bits 32-58 are a-z.
     seen: [N] s64;
-    for input_it: 0..N-1 {
-        input := inputs[input_it];
+    for 0..N-1 {
+        input := inputs[it];
         for char: 0..input.count-1 {
-            seen[input_it] |= 1 << (input[char] - #char "A");
+            seen[it] |= 1 << (input[char] - #char "A");
         }
     }
     // Squish the bitmasks down to find the matching bit.
