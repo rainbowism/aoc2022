@@ -1,7 +1,7 @@
 main :: () {
-    LF : u8 : #char "\n";
+    CRLF :: "\r\n";
     text := read_entire_file("02.txt");
-    lines := split(text, LF);
+    lines := split(text, CRLF);
 
     score_a: int;
     score_b: int;

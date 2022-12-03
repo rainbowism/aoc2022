@@ -1,12 +1,11 @@
 main :: () {
-    LF : u8 : #char "\n";
+    CRLF :: "\r\n";
     text := read_entire_file("01.txt");
-    lines := split(text, LF);
+    lines := split(text, CRLF);
     sum: int;
     largest: [3] int;
     for line: lines {
-        // @Note(sushi): The input is denoted by a CRLF, so there's an extra character on every line.
-        if line.count <= 1 {
+        if line.count == 0 {
             if sum > largest[0] {
                 largest[2] = largest[1];
                 largest[1] = largest[0];

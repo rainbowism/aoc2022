@@ -1,14 +1,10 @@
 main :: () {
-    LF : u8 : #char "\n";
+    CRLF :: "\r\n";
     text := read_entire_file("03.txt");
-    lines := split(text, LF);
+    lines := split(text, CRLF);
 
     score_a: int;
     score_b: int;
-    match: s64;
-
-    LOWER_DELTA :: #char "z" - 26;
-    UPPER_DELTA :: #char "Z" - 52;
 
     for line: lines {
         left:  string = ---;
@@ -22,13 +18,11 @@ main :: () {
     }
 
     for 0..lines.count/3-1 {
-        left   := lines[it * 3];
-        middle := lines[it * 3 + 1];
-        right  := lines[it * 3 + 2];
-        left.count   -= 1;
-        middle.count -= 1;
-        right.count  -= 1;
-        score_b += find_matches(3, left, middle, right);
+        score_b += find_matches(3,
+            lines[it * 3],
+            lines[it * 3 + 1],
+            lines[it * 3 + 2],
+        );
     }
 
     print("1: %\n", score_a);
