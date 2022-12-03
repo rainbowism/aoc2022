@@ -18,14 +18,7 @@ main :: () {
         right.data  = left.data + left.count;
         right.count = left.count;
 
-        match = find_matches(2, left, right);
-
-        if match >= #char "a" && match <= #char "z" {
-            score_a += match - LOWER_DELTA;
-        } else { // if match >= #char "A" && match >= #char "Z"
-            // if the above doesn't match, it must be uppercase
-            score_a += match - UPPER_DELTA;
-        }
+        score_a += find_matches(2, left, right);
     }
 
     for 0..lines.count/3-1 {
@@ -35,14 +28,7 @@ main :: () {
         left.count   -= 1;
         middle.count -= 1;
         right.count  -= 1;
-        match = find_matches(3, left, middle, right);
-
-        if match >= #char "a" && match <= #char "z" {
-            score_b += match - LOWER_DELTA;
-        } else { // if match >= #char "A" && match >= #char "Z"
-            // if the above doesn't match, it must be uppercase
-            score_b += match - UPPER_DELTA;
-        }
+        score_b += find_matches(3, left, middle, right);
     }
 
     print("1: %\n", score_a);
@@ -51,26 +37,25 @@ main :: () {
 
 find_matches :: inline ($N: int, inputs: .. string) -> s64 {
     CHARS :: #char "z" - #char "A" + 1;
-    seen: [N] [CHARS] bool;
+    seen: [N] s64;
     for input_it: 0..N-1 {
         input := inputs[input_it];
         for char: 0..input.count-1 {
-            seen[input_it][input[char] - #char "A"] = true;
+            seen[input_it] |= 1 << (input[char] - #char "A");
         }
     }
-    for char: 0..CHARS-1 {
-        success := true;
-        for input_it: 0..N-1 {
-            if seen[input_it][char]  continue;
-            success = false;
-            break;
-        }
-        if success  return char + #char "A";
+    result: s64 = seen[0];
+    for 1..N-1 {
+        result &= seen[it];
     }
-    assert(false, "We shouldn't ever reach this condition.");
-    return 0;
+    result = bit_scan_forward(result);
+    if result >= 27 {
+        return result - 32;
+    }
+    return result + 26;
 }
 
 #import "Basic";
 #import "String";
 #import "File";
+#import "Bit_Operations";
