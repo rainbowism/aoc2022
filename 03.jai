@@ -30,7 +30,8 @@ main :: () {
 }
 
 find_matches :: inline ($N: int, inputs: .. string) -> s64 {
-    CHARS :: #char "z" - #char "A" + 1;
+    // Convert the strings into bitmasks where bits 1-26 are A-Z
+    //  and bits 32-58 are a-z.
     seen: [N] s64;
     for input_it: 0..N-1 {
         input := inputs[input_it];
@@ -38,14 +39,13 @@ find_matches :: inline ($N: int, inputs: .. string) -> s64 {
             seen[input_it] |= 1 << (input[char] - #char "A");
         }
     }
+    // Squish the bitmasks down to find the matching bit.
     result: s64 = seen[0];
-    for 1..N-1 {
-        result &= seen[it];
-    }
+    for 1..N-1  result &= seen[it];
     result = bit_scan_forward(result);
-    if result >= 27 {
-        return result - 32;
-    }
+    // The lowercase are offset by 32, so subtract 32.
+    if result >= 27  return result - 32;
+    // ...and the uppercase need 26 more points.
     return result + 26;
 }
 
