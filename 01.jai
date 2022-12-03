@@ -5,6 +5,7 @@ main :: () {
     sum: int;
     largest: [3] int;
     for line: lines {
+        // @Note(sushi): The input is denoted by a CRLF, so there's an extra character on every line.
         if line.count <= 1 {
             if sum > largest[0] {
                 largest[2] = largest[1];
