@@ -17,10 +17,10 @@ main :: () {
         // `line[2] - #char "W"` will map the action to [1, 2, 3], for the extra points.
         score_a += (((line[2] - line[0] + 2) % 3) * 3) + (line[2] - #char "W");
 
-        // `loss`, `tie`, and `win` wrap result vector of [rock, paper, scissors]
+        // `loss`, `tie`, and `win` wraps the result vector of [rock, paper, scissors]
         //  into the coresponding action for the opponent's action.
         score_b += ((line[2] - #char "X") * 3);
-        if (line[2] - #char "X") == {
+        if line[2] - #char "X" == {
         case 0; score_b += loss(line[0]);
         case 1; score_b += tie(line[0]);
         case 2; score_b += win(line[0]);

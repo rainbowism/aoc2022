@@ -1,1 +1,1 @@
-Advent of Code in Jai
+Advent of Code 2022 in Jai
