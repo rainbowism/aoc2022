@@ -4,7 +4,7 @@ main :: () {
     lines := split(text, CRLF);
 
     score_a: int;
-    score_b_inv: int;
+    score_b: int;
 
     for line: lines {
         found_line, left, right := split_from_left(line, #char ",");
@@ -15,14 +15,12 @@ main :: () {
         right_low := string_to_int(right_low_text);
         right_high := string_to_int(right_high_text);
 
-        if ((left_low <= right_low) && (left_high >= right_high)) || ((left_low >= right_low) && (left_high <= right_high)) {
-            score_a += 1;
-        }
-        if left_high < right_low || left_low > right_high  score_b_inv += 1;
+        score_a += cast(s8) ((left_low <= right_low && left_high >= right_high) || (left_low >= right_low && left_high <= right_high));
+        score_b += cast(s8) (left_high >= right_low && left_low <= right_high);
     }
 
     print("1: %\n", score_a);
-    print("2: %\n", lines.count - score_b_inv);
+    print("2: %\n", score_b);
 }
 
 #import "Basic";
