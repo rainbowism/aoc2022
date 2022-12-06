@@ -1,6 +1,6 @@
 main :: () {
     CRLF :: "\r\n";
-    text := read_entire_file(".txt");
+    text := read_entire_file("input/.txt");
     lines := split(text, CRLF);
 }
 

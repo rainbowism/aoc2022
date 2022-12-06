@@ -1,6 +1,6 @@
 main :: () {
     CRLF :: "\r\n";
-    text := read_entire_file("04.txt");
+    text := read_entire_file("input/04.txt");
     lines := split(text, CRLF);
 
     score_a: int;

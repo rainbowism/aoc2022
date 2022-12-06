@@ -1,6 +1,6 @@
 main :: () {
     CRLF :: "\r\n";
-    text := read_entire_file("01.txt");
+    text := read_entire_file("input/01.txt");
     lines := split(text, CRLF);
     sum: int;
     largest: [3] int;

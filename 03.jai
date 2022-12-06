@@ -1,21 +1,10 @@
 main :: () {
     CRLF :: "\r\n";
-    text := read_entire_file("03.txt");
+    text := read_entire_file("input/03.txt");
     lines := split(text, CRLF);
 
     score_a: int;
     score_b: int;
-
-    for line: lines {
-        left:  string = ---;
-        left.data  = line.data;
-        left.count = line.count / 2;
-        right: string = ---;
-        right.data  = left.data + left.count;
-        right.count = left.count;
-
-        score_a += find_matches(2, left, right);
-    }
 
     for 0..lines.count/3-1 {
         score_b += find_matches(3,
@@ -23,6 +12,27 @@ main :: () {
             lines[it * 3 + 1],
             lines[it * 3 + 2],
         );
+
+        left:  string = ---;
+        right: string = ---;
+
+        left.data  = lines[it * 3].data;
+        left.count = lines[it * 3].count / 2;
+        right.data  = left.data + left.count;
+        right.count = left.count;
+        score_a += find_matches(2, left, right);
+
+        left.data  = lines[it * 3 + 1].data;
+        left.count = lines[it * 3 + 1].count / 2;
+        right.data  = left.data + left.count;
+        right.count = left.count;
+        score_a += find_matches(2, left, right);
+
+        left.data  = lines[it * 3 + 2].data;
+        left.count = lines[it * 3 + 2].count / 2;
+        right.data  = left.data + left.count;
+        right.count = left.count;
+        score_a += find_matches(2, left, right);
     }
 
     print("1: %\n", score_a);
