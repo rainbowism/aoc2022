@@ -15,20 +15,23 @@ main :: () {
         instruction := split(lines[it], SPACE);
         move   := string_to_int(instruction[1]);
         source := string_to_int(instruction[3]) - 1;
-        dest   := string_to_int(instruction[5]) - 1;
+        target := string_to_int(instruction[5]) - 1;
 
-        // Copy characters 1 at a time, in reverse from source to dest.
-        for 0..move-1 {
-            stacks_a[dest].count += 1;
-            stacks_a[dest][stacks_a[dest].count - 1] = stacks_a[source][stacks_a[source].count - 1];
-            stacks_a[source].count -= 1;
-        }
+        // Copy characters 1 at a time, in reverse from source to target.
+        stacks_a[target].count += move;
+        for 0..move-1  stacks_a[target][stacks_a[target].count - 1] = stacks_a[source][stacks_a[source].count - 1];
+        stacks_a[source].count -= move;
 
-        // Copy characters `move` number of characters from source to dest.
-        stacks_b[dest].count += move;
-        memcpy(*stacks_b[dest][stacks_b[dest].count - move], *stacks_b[source][stacks_b[source].count - move], move);
+        // Copy `move` number of characters from source to target.
+        stacks_b[target].count += move;
+        memcpy(
+            *stacks_b[target][stacks_b[target].count - move],
+            *stacks_b[source][stacks_b[source].count - move],
+            move,
+        );
         stacks_b[source].count -= move;
     }
+
     write_string("1: ");
     for stacks_a  print_character(it[it.count - 1]);
     write_string("\n");
